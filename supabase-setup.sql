@@ -33,7 +33,11 @@ create policy "auth write"
   on products for all
   using (auth.role() = 'authenticated');
 
--- 5. Criar bucket de imagens (faça pelo Dashboard: Storage → New bucket)
+-- 5. Migration: adicionar coluna images (array de URLs)
+-- Execute se a tabela já existir:
+alter table products add column if not exists images text[] default '{}';
+
+-- 6. Criar bucket de imagens (faça pelo Dashboard: Storage → New bucket)
 --    Nome: product-images
 --    Public bucket: true
 

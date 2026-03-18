@@ -76,27 +76,27 @@ export function hero() {
         </div>
 
         <!-- Stats -->
-        <div class="mt-16 flex gap-10 opacity-0 animate-fade-up delay-600">
+        <div class="mt-16 flex gap-6 md:gap-10 opacity-0 animate-fade-up delay-600">
           <div>
-            <div class="font-serif text-3xl font-bold text-cds-gold">388+</div>
-            <div class="text-cds-nude/50 text-xs tracking-widest uppercase mt-1">Criações</div>
+            <div class="font-serif text-2xl md:text-3xl font-bold text-cds-gold">388+</div>
+            <div class="text-cds-nude/50 text-[10px] md:text-xs tracking-widest uppercase mt-1">Criações</div>
           </div>
           <div class="w-px bg-cds-gold/20"></div>
           <div>
-            <div class="font-serif text-3xl font-bold text-cds-gold">100%</div>
-            <div class="text-cds-nude/50 text-xs tracking-widest uppercase mt-1">Personalizado</div>
+            <div class="font-serif text-2xl md:text-3xl font-bold text-cds-gold">100%</div>
+            <div class="text-cds-nude/50 text-[10px] md:text-xs tracking-widest uppercase mt-1">Personalizado</div>
           </div>
           <div class="w-px bg-cds-gold/20"></div>
           <div>
-            <div class="font-serif text-3xl font-bold text-cds-gold">Santos</div>
-            <div class="text-cds-nude/50 text-xs tracking-widest uppercase mt-1">Santos, SP</div>
+            <div class="font-serif text-2xl md:text-3xl font-bold text-cds-gold">Santos</div>
+            <div class="text-cds-nude/50 text-[10px] md:text-xs tracking-widest uppercase mt-1">Santos, SP</div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Scroll hint -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60 animate-float">
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 opacity-60 animate-float">
       <span class="text-xs text-cds-nude/50 tracking-widest uppercase">Explorar</span>
       <div class="w-px h-10 bg-gradient-to-b from-cds-gold/60 to-transparent"></div>
     </div>

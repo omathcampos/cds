@@ -6,12 +6,12 @@ function renderCategoryList(categories) {
       <!-- Adicionar nova -->
       <div class="bg-cds-dark/40 border border-cds-gold/10 rounded-xl p-5">
         <h3 class="text-cds-white font-medium text-sm mb-4">Nova categoria</h3>
-        <form id="category-add-form" class="flex gap-3">
+        <form id="category-add-form" class="flex flex-wrap gap-2">
           <input type="text" name="nome" required placeholder="Ex: Porta Documentos"
-                 class="admin-input flex-1" maxlength="50" />
+                 class="admin-input flex-1 min-w-0" maxlength="50" style="min-width:140px" />
           <input type="number" name="ordem" min="0" value="${categories.length + 1}" placeholder="Ordem"
-                 class="admin-input w-24" title="Ordem de exibição (menor aparece primeiro)" />
-          <button type="submit" class="btn-gold px-5 py-2 rounded-full text-xs font-semibold whitespace-nowrap">
+                 class="admin-input w-20" title="Ordem de exibição (menor aparece primeiro)" />
+          <button type="submit" class="btn-gold px-5 py-2 rounded-full text-xs font-semibold whitespace-nowrap w-full sm:w-auto">
             + Adicionar
           </button>
         </form>

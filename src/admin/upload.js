@@ -39,6 +39,10 @@ async function compressImage(file) {
   })
 }
 
+export async function uploadImages(files) {
+  return Promise.all(Array.from(files).map(f => uploadImage(f)))
+}
+
 export async function uploadImage(file) {
   validateFile(file)
   const blob = await compressImage(file)
