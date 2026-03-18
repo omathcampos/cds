@@ -3,6 +3,7 @@ import { FALLBACK_PRODUCTS } from './fallback-data.js'
 
 const CACHE_KEY = 'cds_catalog_cache'
 const CACHE_TTL = 10 * 60 * 1000 // 10 minutes
+const MODIFIED_KEY = 'cds_catalog_modified'
 
 function getCache() {
   try {
@@ -10,6 +11,12 @@ function getCache() {
     if (!raw) return null
     const { data, ts } = JSON.parse(raw)
     if (Date.now() - ts > CACHE_TTL) {
+      sessionStorage.removeItem(CACHE_KEY)
+      return null
+    }
+    // Invalida se o admin modificou algo depois que o cache foi gerado
+    const lastModified = parseInt(localStorage.getItem(MODIFIED_KEY) || '0')
+    if (lastModified > ts) {
       sessionStorage.removeItem(CACHE_KEY)
       return null
     }

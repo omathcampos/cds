@@ -2,7 +2,10 @@ import { supabase } from '../lib/supabase.js'
 
 const CATALOG_CACHE_KEY = 'cds_catalog_cache'
 function invalidateCatalogCache() {
-  try { sessionStorage.removeItem(CATALOG_CACHE_KEY) } catch {}
+  try {
+    sessionStorage.removeItem(CATALOG_CACHE_KEY)
+    localStorage.setItem('cds_catalog_modified', Date.now().toString())
+  } catch {}
 }
 
 export async function getProducts() {
