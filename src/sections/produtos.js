@@ -33,7 +33,7 @@ export function produtos(items = null) {
       <!-- CTA abaixo do grid -->
       <div class="text-center mt-14 reveal">
         <p class="text-cds-nude/50 text-sm mb-5">Não encontrou o que procura? Temos muito mais!</p>
-        <a href="/catalog.html"
+        <a href="/catalog"
            class="btn-gold inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-sm">
           <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>

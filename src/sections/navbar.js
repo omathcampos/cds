@@ -17,7 +17,7 @@ export function navbar() {
         <!-- Nav links desktop -->
         <div class="hidden md:flex items-center gap-8">
           <a href="#produtos" class="text-sm text-cds-nude/70 hover:text-cds-gold transition-colors duration-300 tracking-wide">Produtos</a>
-          <a href="/catalog.html" class="text-sm text-cds-nude/70 hover:text-cds-gold transition-colors duration-300 tracking-wide">Catálogo</a>
+          <a href="/catalog" class="text-sm text-cds-nude/70 hover:text-cds-gold transition-colors duration-300 tracking-wide">Catálogo</a>
           <a href="#corporativo" class="text-sm text-cds-nude/70 hover:text-cds-gold transition-colors duration-300 tracking-wide">Corporativo</a>
           <a href="#como-funciona" class="text-sm text-cds-nude/70 hover:text-cds-gold transition-colors duration-300 tracking-wide">Como funciona</a>
           <a href="#sobre" class="text-sm text-cds-nude/70 hover:text-cds-gold transition-colors duration-300 tracking-wide">A Stephannie</a>
@@ -49,7 +49,7 @@ export function navbar() {
     <div id="mobile-menu" class="hidden md:hidden bg-cds-dark/95 backdrop-blur-xl border-t border-cds-gold/10">
       <div class="px-6 py-6 flex flex-col gap-5">
         <a href="#produtos"      class="text-cds-nude/80 hover:text-cds-gold transition-colors text-sm tracking-wide">Produtos</a>
-        <a href="/catalog.html"  class="text-cds-nude/80 hover:text-cds-gold transition-colors text-sm tracking-wide">Catálogo</a>
+        <a href="/catalog"  class="text-cds-nude/80 hover:text-cds-gold transition-colors text-sm tracking-wide">Catálogo</a>
         <a href="#corporativo"   class="text-cds-nude/80 hover:text-cds-gold transition-colors text-sm tracking-wide">Corporativo</a>
         <a href="#como-funciona" class="text-cds-nude/80 hover:text-cds-gold transition-colors text-sm tracking-wide">Como funciona</a>
         <a href="#sobre"         class="text-cds-nude/80 hover:text-cds-gold transition-colors text-sm tracking-wide">A Stephannie</a>

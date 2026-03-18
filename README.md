@@ -38,8 +38,8 @@ npm run preview    # servir build localmente
 | Rota | Descrição |
 |---|---|
 | `/` | Landing page principal |
-| `/catalog.html` | Catálogo com filtros, busca e paginação |
-| `/admin.html` | Painel para gerenciar produtos e categorias |
+| `/catalog` | Catálogo com filtros, busca e paginação |
+| `/admin` | Painel para gerenciar produtos e categorias |
 
 ## Identidade visual
 
