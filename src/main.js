@@ -9,6 +9,8 @@ import { clientes }     from './sections/clientes.js'
 import { ctaFinal }     from './sections/cta-final.js'
 import { footer }       from './sections/footer.js'
 import { floatButton }  from './sections/float-button.js'
+import { fetchFeatured } from './catalog/catalog-api.js'
+import { renderProductGrid } from './catalog/catalog-render.js'
 
 // ── Montar HTML ───────────────────────────────────────────────────────────────
 document.getElementById('app').innerHTML =
@@ -22,6 +24,7 @@ document.getElementById('app').innerHTML =
   ctaFinal() +
   footer() +
   floatButton()
+
 
 // ── Navbar: scroll effect ─────────────────────────────────────────────────────
 const navEl = document.getElementById('navbar')
@@ -80,6 +83,14 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' })
 
 revealEls.forEach(el => observer.observe(el))
+
+// ── Hidratar grid de produtos com dados do Supabase ───────────────────────────
+fetchFeatured().then(products => {
+  const grid = document.getElementById('produtos-grid')
+  if (!grid) return
+  grid.innerHTML = renderProductGrid(products)
+  grid.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el))
+})
 
 // ── Smooth scroll para links âncora ──────────────────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {

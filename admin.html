@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel — CDS</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body class="bg-cds-dark text-cds-cream font-sans min-h-screen">
+
+  <!-- ── Tela de Login ──────────────────────────────────────────────────────── -->
+  <div id="login-section" class="min-h-screen flex items-center justify-center px-4">
+    <div class="w-full max-w-sm">
+      <!-- Logo -->
+      <div class="text-center mb-10">
+        <div class="w-16 h-16 rounded-full border border-cds-gold/40 flex items-center justify-center mx-auto mb-4">
+          <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="18" stroke="#C9A460" stroke-width="1.5"/>
+            <text x="20" y="26" text-anchor="middle" font-family="Playfair Display, serif" font-size="14" fill="#C9A460" font-weight="700">C</text>
+          </svg>
+        </div>
+        <h1 class="font-serif text-2xl font-bold text-cds-white">Painel CDS</h1>
+        <p class="text-cds-nude/40 text-sm mt-1">Criativos da Stephannie</p>
+      </div>
+
+      <!-- Form -->
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="admin-label">E-mail</label>
+          <input type="email" name="email" required autocomplete="email"
+                 class="admin-input w-full" placeholder="seu@email.com" />
+        </div>
+        <div>
+          <label class="admin-label">Senha</label>
+          <input type="password" name="password" required autocomplete="current-password"
+                 class="admin-input w-full" placeholder="••••••••" />
+        </div>
+        <div id="login-error" class="hidden text-red-400 text-sm px-3 py-2 bg-red-900/20 rounded-lg border border-red-800/30"></div>
+        <button type="submit" class="btn-gold w-full py-3 rounded-full font-semibold text-sm mt-2">
+          Entrar
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Painel Admin ───────────────────────────────────────────────────────── -->
+  <div id="admin-section" class="hidden min-h-screen">
+
+    <!-- Header do painel -->
+    <header class="border-b border-cds-gold/10 bg-cds-dark/80 backdrop-blur-xl sticky top-0 z-40">
+      <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-7 h-7 rounded-full border border-cds-gold/40 flex items-center justify-center">
+            <svg width="14" height="14" viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="20" r="18" stroke="#C9A460" stroke-width="1.5"/>
+              <text x="20" y="26" text-anchor="middle" font-family="Playfair Display, serif" font-size="14" fill="#C9A460" font-weight="700">C</text>
+            </svg>
+          </div>
+          <span class="font-serif text-cds-white font-semibold">Painel CDS</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="/catalog.html" target="_blank" class="text-cds-nude/40 hover:text-cds-gold text-xs transition-colors">Ver catálogo ↗</a>
+          <button id="btn-sign-out" class="text-cds-nude/40 hover:text-red-400 text-xs transition-colors">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Conteúdo -->
+    <div class="max-w-6xl mx-auto px-6 py-8">
+
+      <!-- Tab nav -->
+      <div class="flex gap-1 mb-8 border-b border-cds-gold/10 pb-0">
+        <button id="tab-produtos" class="tab-btn px-5 py-2.5 text-sm font-medium border-b-2 border-cds-gold text-cds-gold -mb-px transition-colors">
+          Produtos
+        </button>
+        <button id="tab-categorias" class="tab-btn px-5 py-2.5 text-sm font-medium border-b-2 border-transparent text-cds-nude/50 hover:text-cds-nude/80 -mb-px transition-colors">
+          Categorias
+        </button>
+      </div>
+
+      <!-- ── Painel Produtos ── -->
+      <div id="produtos-panel">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="font-serif text-2xl text-cds-white">Produtos</h2>
+          <button id="btn-add-product" class="btn-gold px-5 py-2.5 rounded-full text-sm font-semibold flex items-center gap-2">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            Adicionar
+          </button>
+        </div>
+        <div id="list-section"></div>
+        <div id="form-section" class="hidden"></div>
+      </div>
+
+      <!-- ── Painel Categorias ── -->
+      <div id="categorias-panel" class="hidden">
+        <h2 class="font-serif text-2xl text-cds-white mb-6">Categorias</h2>
+        <div id="categories-section"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="/src/admin/main.js"></script>
+</body>
+</html>
