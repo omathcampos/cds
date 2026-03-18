@@ -15,6 +15,14 @@ export async function getProducts() {
 }
 
 export async function saveProduct(product) {
+  // Valida nome duplicado (case-insensitive, ignora o próprio produto ao editar)
+  const { data: existing } = await supabase
+    .from('products')
+    .select('id, nome')
+    .ilike('nome', product.nome.trim())
+  const duplicate = (existing || []).find(p => !product.id || String(p.id) !== String(product.id))
+  if (duplicate) throw new Error(`Já existe um produto com o nome "${duplicate.nome}".`)
+
   if (product.id) {
     const { id, created_at, ...fields } = product
     const { data, error } = await supabase

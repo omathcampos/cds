@@ -21,7 +21,7 @@ const depoimentos = [
 
 export function clientes() {
   return `
-  <section id="clientes" class="relative py-28 overflow-hidden" style="background: linear-gradient(180deg, #100A03 0%, #1A0E05 100%);">
+  <section id="clientes" class="relative py-28 overflow-hidden" style="background: linear-gradient(180deg, #1a2b49 0%, #162238 100%);">
 
     <!-- Faixa de logos / marcas parceiras (simulada) -->
     <div class="absolute inset-0 pointer-events-none">

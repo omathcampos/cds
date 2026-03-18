@@ -96,41 +96,92 @@ export function renderFilters(categories, activeCategory = 'Todos', activePublic
   const publicos = ['Todos', 'B2C', 'B2B']
 
   return `
+    <!-- Linha 1: dropdown + pills | search (wraps em telas estreitas) -->
     <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
-      <!-- Dropdown de categoria -->
-      <div style="position:relative; flex-shrink:0;">
-        <select id="filter-category-select" class="catalog-select ${activeCategory !== 'Todos' ? 'active' : ''}">
-          ${cats.map(c => `<option value="${c}" ${c === activeCategory ? 'selected' : ''}>${c}</option>`).join('')}
-        </select>
-        <svg style="pointer-events:none; position:absolute; right:0.625rem; top:50%; transform:translateY(-50%); color:rgba(201,164,96,0.5);"
-             width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-          <path d="m6 9 6 6 6-6"/>
-        </svg>
-      </div>
-
-      <!-- Pills de público -->
-      <div id="filter-publico" style="display:flex; gap:0.5rem;">
-        ${publicos.map(p => `
-          <button class="catalog-pill ${p === activePublico ? 'active' : ''}"
-                  data-filter-publico="${p}">
-            ${p === 'B2C' ? 'Presente pessoal' : p === 'B2B' ? 'Corporativo' : 'Todos'}
-          </button>
-        `).join('')}
-      </div>
-
-      <!-- Search + contador à direita -->
-      <div style="display:flex; align-items:center; gap:0.75rem; margin-left:auto;">
-        <span id="catalog-count" style="color:rgba(245,236,215,0.3); font-size:0.75rem; white-space:nowrap;">
-          ${count > 0 ? `${count} produto${count !== 1 ? 's' : ''}` : ''}
-        </span>
-        <div style="position:relative; flex-shrink:0; width:10rem;">
-          <input type="text" id="catalog-search" placeholder="Buscar..."
-                 class="admin-input" style="width:100%; padding-left:2rem; font-size:0.75rem; padding-top:0.375rem; padding-bottom:0.375rem;" />
-          <svg style="position:absolute; left:0.625rem; top:50%; transform:translateY(-50%); color:rgba(245,236,215,0.3);"
-               width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      <!-- Grupo esquerdo: dropdown + pills -->
+      <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; flex:0 1 auto;">
+        <div style="position:relative; flex-shrink:0;">
+          <select id="filter-category-select" class="catalog-select ${activeCategory !== 'Todos' ? 'active' : ''}">
+            ${cats.map(c => `<option value="${c}" ${c === activeCategory ? 'selected' : ''}>${c}</option>`).join('')}
+          </select>
+          <svg style="pointer-events:none; position:absolute; right:0.625rem; top:50%; transform:translateY(-50%); color:rgba(201,164,96,0.5);"
+               width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+            <path d="m6 9 6 6 6-6"/>
           </svg>
         </div>
+        <div id="filter-publico" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          ${publicos.map(p => `
+            <button class="catalog-pill ${p === activePublico ? 'active' : ''}"
+                    data-filter-publico="${p}">
+              ${p === 'B2C' ? 'Presente pessoal' : p === 'B2B' ? 'Corporativo' : 'Todos'}
+            </button>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Search: cresce para preencher espaço restante, mín 160px -->
+      <div style="position:relative; flex:1 1 160px; min-width:0; max-width:20rem;">
+        <input type="text" id="catalog-search" placeholder="Buscar produto..."
+               class="admin-input" style="width:100%; padding-left:2rem; font-size:0.75rem; padding-top:0.375rem; padding-bottom:0.375rem;" />
+        <svg style="position:absolute; left:0.625rem; top:50%; transform:translateY(-50%); color:rgba(244,241,237,0.3);"
+             width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Linha 2: contador sutil -->
+    <div style="display:flex; justify-content:flex-end; margin-top:0.375rem;">
+      <span id="catalog-count" style="color:rgba(244,241,237,0.25); font-size:0.7rem; white-space:nowrap;">
+        ${count > 0 ? `${count} produto${count !== 1 ? 's' : ''} encontrado${count !== 1 ? 's' : ''}` : ''}
+      </span>
+    </div>
+  `
+}
+
+export function renderPagination(total, page, size) {
+  const totalPages = Math.ceil(total / size)
+  if (totalPages <= 1) return ''
+
+  const sizes = [12, 24, 48]
+  const prev = page > 1
+  const next = page < totalPages
+
+  const pageButtons = Array.from({ length: totalPages }, (_, i) => i + 1).map(n => `
+    <button data-page="${n}" style="
+      width:2rem; height:2rem; border-radius:9999px; font-size:0.75rem; font-weight:500;
+      border:1px solid ${n === page ? 'rgba(201,164,96,0.5)' : 'rgba(201,164,96,0.12)'};
+      background:${n === page ? 'rgba(201,164,96,0.12)' : 'transparent'};
+      color:${n === page ? '#C9A460' : 'rgba(244,241,237,0.4)'};
+      cursor:pointer; transition:all 0.2s;">
+      ${n}
+    </button>
+  `).join('')
+
+  return `
+    <div style="display:flex; align-items:center; justify-content:center; gap:0.5rem; padding:2rem 0 1rem; flex-wrap:wrap;">
+      <button data-page="${page - 1}" ${!prev ? 'disabled' : ''} style="
+        padding:0.375rem 0.75rem; border-radius:9999px; font-size:0.75rem;
+        border:1px solid rgba(201,164,96,0.12); color:${prev ? 'rgba(244,241,237,0.5)' : 'rgba(244,241,237,0.15)'};
+        background:transparent; cursor:${prev ? 'pointer' : 'default'}; transition:all 0.2s;">← Anterior</button>
+
+      ${pageButtons}
+
+      <button data-page="${page + 1}" ${!next ? 'disabled' : ''} style="
+        padding:0.375rem 0.75rem; border-radius:9999px; font-size:0.75rem;
+        border:1px solid rgba(201,164,96,0.12); color:${next ? 'rgba(244,241,237,0.5)' : 'rgba(244,241,237,0.15)'};
+        background:transparent; cursor:${next ? 'pointer' : 'default'}; transition:all 0.2s;">Próxima →</button>
+
+      <div style="display:flex; align-items:center; gap:0.375rem; margin-left:1rem;">
+        <span style="font-size:0.7rem; color:rgba(244,241,237,0.3);">Mostrar:</span>
+        ${sizes.map(s => `
+          <button data-page-size="${s}" style="
+            padding:0.25rem 0.625rem; border-radius:9999px; font-size:0.7rem;
+            border:1px solid ${s === size ? 'rgba(201,164,96,0.4)' : 'rgba(201,164,96,0.1)'};
+            background:${s === size ? 'rgba(201,164,96,0.1)' : 'transparent'};
+            color:${s === size ? '#C9A460' : 'rgba(244,241,237,0.35)'};
+            cursor:pointer; transition:all 0.2s;">${s}</button>
+        `).join('')}
       </div>
     </div>
   `

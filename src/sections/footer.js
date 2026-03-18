@@ -8,12 +8,7 @@ export function footer() {
         <!-- Logo e tagline -->
         <div>
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-8 h-8 rounded-full border border-cds-gold/40 flex items-center justify-center">
-              <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
-                <circle cx="20" cy="20" r="18" stroke="#C9A460" stroke-width="1.5"/>
-                <text x="20" y="26" text-anchor="middle" font-family="Playfair Display, serif" font-size="14" fill="#C9A460" font-weight="700">C</text>
-              </svg>
-            </div>
+            <img src="/gold-submarca.png" alt="CDS — Criativos da Stephannie" class="h-10 w-auto" />
             <span class="font-serif text-base font-semibold text-cds-white">CDS</span>
           </div>
           <p class="text-cds-nude/40 text-xs leading-relaxed max-w-xs">

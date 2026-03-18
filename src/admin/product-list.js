@@ -1,4 +1,5 @@
 import { getProducts, saveProduct, hardDeleteProduct } from './products-api.js'
+import { showConfirm, showAlert } from './ui.js'
 
 function formatPrice(v) {
   if (v == null) return '—'
@@ -102,7 +103,7 @@ function bindListActions(container, products, onEdit) {
         await saveProduct({ ...product, ativo: !isAtivo })
         await loadAndRenderList(container, onEdit)
       } catch (err) {
-        alert(`Erro: ${err.message}`)
+        await showAlert(`Erro: ${err.message}`)
         btn.disabled = false
       }
     })
@@ -111,14 +112,15 @@ function bindListActions(container, products, onEdit) {
   container.querySelectorAll('[data-action="delete"]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const nome = btn.dataset.nome
-      if (!confirm(`Excluir permanentemente "${nome}"?\n\nEssa ação não pode ser desfeita.`)) return
+      const ok = await showConfirm(`Excluir "${nome}"?`, 'Essa ação não pode ser desfeita.', 'Excluir', true)
+      if (!ok) return
       btn.disabled = true
       btn.textContent = '...'
       try {
         await hardDeleteProduct(btn.dataset.id)
         await loadAndRenderList(container, onEdit)
       } catch (err) {
-        alert(`Erro ao excluir: ${err.message}`)
+        await showAlert(`Erro ao excluir: ${err.message}`)
         btn.disabled = false
         btn.textContent = 'Excluir'
       }
