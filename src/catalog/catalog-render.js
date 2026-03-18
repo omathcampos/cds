@@ -51,18 +51,18 @@ export function renderCatalogCard(product) {
   const precoDe = formatPrice(product.preco_de)
 
   return `
-    <div class="img-overlay rounded-xl overflow-hidden group cursor-pointer card-hover bg-cds-dark/40 border border-cds-gold/10 hover:border-cds-gold/30 transition-colors duration-300"
+    <div class="img-overlay rounded-xl overflow-hidden group cursor-pointer card-hover bg-cds-dark/40 border border-cds-gold/10 hover:border-cds-gold/30 transition-colors duration-300 flex flex-col"
          data-product-id="${product.id}"
          data-open-modal>
-      <div class="relative overflow-hidden" style="height: ${product.tall ? '320px' : '220px'};">
+      <div class="relative overflow-hidden" style="aspect-ratio:4/3;">
         ${imgOrPlaceholder(product)}
         <div class="absolute inset-0 bg-gradient-to-t from-cds-dark/80 via-transparent to-transparent"></div>
         ${product.tag ? `<span class="product-tag absolute top-3 left-3 text-[10px]">${product.tag}</span>` : ''}
       </div>
-      <div class="p-4">
+      <div class="p-4 flex flex-col flex-1">
         <h3 class="font-serif text-base font-semibold text-cds-white leading-tight mb-1">${product.nome}</h3>
-        ${product.descricao ? `<p class="text-cds-nude/50 text-xs mb-3 leading-relaxed">${product.descricao}</p>` : ''}
-        <div class="flex items-end justify-between">
+        ${product.descricao ? `<p class="text-cds-nude/50 text-xs mb-3 leading-relaxed line-clamp-2">${product.descricao}</p>` : ''}
+        <div class="flex items-end justify-between mt-auto">
           <div>
             ${precoDe ? `<span class="text-cds-nude/40 text-xs line-through block">${precoDe}</span>` : ''}
             ${precoPor ? `<span class="text-cds-gold font-semibold text-base">${precoPor}</span>` : ''}
@@ -192,25 +192,44 @@ export function renderModal(product) {
   const precoDe = formatPrice(product.preco_de)
   const waMsg = encodeURIComponent(`Olá! Tenho interesse no produto: ${product.nome}. Pode me dar mais informações?`)
   const waLink = `https://wa.me/${WA_NUMBER}?text=${waMsg}`
+  const images = product.images?.length ? product.images : (product.image_url ? [product.image_url] : [])
 
   return `
     <div id="product-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4"
          role="dialog" aria-modal="true" aria-label="${product.nome}">
       <div class="absolute inset-0 bg-cds-dark/90 backdrop-blur-sm" id="modal-backdrop"></div>
-      <div class="relative bg-[#231A0E] border border-cds-gold/20 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div class="relative bg-cds-dark border border-cds-gold/20 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
         <!-- Fechar -->
-        <button id="modal-close" class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-cds-dark/60 border border-cds-gold/20 flex items-center justify-center text-cds-nude/60 hover:text-cds-gold hover:border-cds-gold/50 transition-colors"
+        <button id="modal-close" class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-cds-dark/80 border border-cds-gold/20 flex items-center justify-center text-cds-nude/60 hover:text-cds-gold hover:border-cds-gold/50 transition-colors"
                 aria-label="Fechar">✕</button>
 
-        <!-- Imagem -->
-        <div class="relative overflow-hidden rounded-t-2xl" style="height: 280px;">
-          ${product.image_url
-            ? `<img src="${product.image_url}" alt="${product.nome}" class="w-full h-full object-cover" />`
-            : `<div class="w-full h-full bg-cds-dark/60 flex items-center justify-center"><span class="font-serif text-cds-gold/30 text-5xl">CDS</span></div>`
+        <!-- Imagem principal -->
+        <div class="relative rounded-t-2xl overflow-hidden bg-cds-brown/20" style="max-height:360px;">
+          ${images.length
+            ? `<img id="modal-main-img" src="${images[0]}" alt="${product.nome}" class="w-full object-contain" style="max-height:360px;" />`
+            : `<div class="flex items-center justify-center" style="height:200px;"><span class="font-serif text-cds-gold/30 text-5xl">CDS</span></div>`
           }
-          <div class="absolute inset-0 bg-gradient-to-t from-[#231A0E] via-transparent to-transparent"></div>
           ${product.tag ? `<span class="product-tag absolute top-4 left-4 text-xs">${product.tag}</span>` : ''}
+          ${images.length > 1 ? `
+            <button id="modal-prev" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-cds-dark/70 border border-cds-gold/20 flex items-center justify-center text-cds-nude/70 hover:text-cds-gold hover:border-cds-gold/50 transition-all backdrop-blur-sm">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button id="modal-next" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-cds-dark/70 border border-cds-gold/20 flex items-center justify-center text-cds-nude/70 hover:text-cds-gold hover:border-cds-gold/50 transition-all backdrop-blur-sm">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          ` : ''}
         </div>
+
+        <!-- Thumbnails (só se tiver mais de 1 imagem) -->
+        ${images.length > 1 ? `
+        <div class="flex gap-2 px-4 py-3 overflow-x-auto">
+          ${images.map((url, i) => `
+            <img src="${url}" data-thumb-idx="${i}"
+                 class="w-14 h-14 object-cover rounded-lg flex-shrink-0 cursor-pointer transition-all
+                        ${i === 0 ? 'border-2 border-cds-gold' : 'border-2 border-transparent hover:border-cds-gold/50'}" />
+          `).join('')}
+        </div>
+        ` : ''}
 
         <!-- Conteúdo -->
         <div class="p-6">

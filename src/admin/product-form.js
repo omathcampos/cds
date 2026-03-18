@@ -1,4 +1,4 @@
-import { uploadImage } from './upload.js'
+import { uploadImage, uploadImages } from './upload.js'
 import { saveProduct } from './products-api.js'
 
 // categorias é passado como parâmetro — vem do banco
@@ -100,28 +100,18 @@ export function renderProductForm(product = null, categories = []) {
           </label>
         </div>
 
-        <!-- Imagem -->
+        <!-- Imagens -->
         <div class="md:col-span-2">
-          <label class="admin-label">Foto do produto</label>
-          ${p.image_url ? `
-            <div class="mb-3">
-              <img src="${p.image_url}" alt="Foto atual" class="w-24 h-24 object-cover rounded-lg border border-cds-gold/20" />
-              <p class="text-cds-nude/40 text-xs mt-1">Foto atual — selecione outra para substituir</p>
-            </div>
-          ` : ''}
-          <input type="file" name="image" accept="image/jpeg,image/png,image/webp" id="image-input" class="hidden" />
-          <label for="image-input" class="cursor-pointer flex items-center gap-3 border border-dashed border-cds-gold/30 hover:border-cds-gold/60 rounded-xl p-4 text-cds-nude/50 hover:text-cds-gold transition-all text-sm">
-            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+          <label class="admin-label">Fotos do produto</label>
+          <div id="images-grid" class="flex flex-wrap gap-2 mb-3"></div>
+          <label for="image-input" class="cursor-pointer inline-flex items-center gap-2 border border-dashed border-cds-gold/30 hover:border-cds-gold/60 rounded-xl px-4 py-3 text-cds-nude/50 hover:text-cds-gold transition-all text-sm">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
               <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
             </svg>
-            <div>
-              <span id="image-filename">Selecionar imagem (JPEG/PNG/WebP, máx 5MB)</span>
-              <span style="display:block;font-size:0.7rem;color:rgba(244,241,237,0.3);margin-top:0.125rem;">Recomendado: 800×800px ou maior, proporção quadrada</span>
-            </div>
+            Adicionar fotos
           </label>
-          <div id="image-preview-wrap" class="mt-3 hidden">
-            <img id="image-preview" src="" alt="Preview" class="w-24 h-24 object-cover rounded-lg border border-cds-gold/30" />
-          </div>
+          <input type="file" id="image-input" accept="image/jpeg,image/png,image/webp" multiple class="hidden" />
+          <p class="text-[11px] text-cds-nude/30 mt-2">A primeira foto será a imagem principal. Recomendado: 800×800px.</p>
         </div>
 
         <!-- Feedback -->
@@ -148,21 +138,55 @@ export function initProductForm(product, onSaved, onCancel, categories = []) {
   const form = document.getElementById('product-form')
   const feedback = document.getElementById('form-feedback')
   const imageInput = document.getElementById('image-input')
-  const imagePreview = document.getElementById('image-preview')
-  const imagePreviewWrap = document.getElementById('image-preview-wrap')
-  const imageFilename = document.getElementById('image-filename')
+
+  // Estado de imagens: URLs já salvas + arquivos novos pendentes
+  let existingUrls = product?.images?.length
+    ? [...product.images]
+    : (product?.image_url ? [product.image_url] : [])
+  let pendingFiles = [] // { file, previewUrl }
+
+  function renderThumbnails() {
+    const grid = document.getElementById('images-grid')
+    if (!grid) return
+    const all = [
+      ...existingUrls.map((url, i) => ({ type: 'existing', url, i })),
+      ...pendingFiles.map((f, i) => ({ type: 'pending', url: f.previewUrl, i })),
+    ]
+    grid.innerHTML = all.map((item, idx) => `
+      <div class="relative group" style="width:80px;height:80px;flex-shrink:0;">
+        <img src="${item.url}" class="w-full h-full object-cover rounded-lg border-2 ${idx === 0 ? 'border-cds-gold' : 'border-cds-gold/20'}" />
+        ${idx === 0 ? `<span style="position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:9px;background:rgba(201,164,96,0.85);color:#1a2b49;border-radius:0 0 6px 6px;padding:1px 0;">Principal</span>` : ''}
+        <button type="button" data-remove-type="${item.type}" data-remove-idx="${item.i}"
+                style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(127,29,29,0.9);color:#fca5a5;font-size:12px;display:none;align-items:center;justify-content:center;border:none;cursor:pointer;line-height:1;">×</button>
+      </div>
+    `).join('')
+
+    grid.querySelectorAll('[data-remove-type]').forEach(btn => {
+      // show on hover via JS
+      const wrap = btn.parentElement
+      wrap.addEventListener('mouseenter', () => btn.style.display = 'flex')
+      wrap.addEventListener('mouseleave', () => btn.style.display = 'none')
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.removeType
+        const i = parseInt(btn.dataset.removeIdx)
+        if (type === 'existing') existingUrls.splice(i, 1)
+        else pendingFiles.splice(i, 1)
+        renderThumbnails()
+      })
+    })
+  }
+
+  renderThumbnails()
 
   document.getElementById('btn-back-list')?.addEventListener('click', onCancel)
   document.getElementById('btn-cancel-form')?.addEventListener('click', onCancel)
 
   imageInput?.addEventListener('change', () => {
-    const file = imageInput.files[0]
-    if (file) {
-      imageFilename.textContent = file.name
-      const url = URL.createObjectURL(file)
-      imagePreview.src = url
-      imagePreviewWrap.classList.remove('hidden')
-    }
+    Array.from(imageInput.files).forEach(file => {
+      pendingFiles.push({ file, previewUrl: URL.createObjectURL(file) })
+    })
+    imageInput.value = ''
+    renderThumbnails()
   })
 
   form?.addEventListener('submit', async (e) => {
@@ -187,16 +211,18 @@ export function initProductForm(product, onSaved, onCancel, categories = []) {
         destaque: fd.get('destaque') === 'on',
         ativo: fd.get('ativo') === 'on',
         tall: fd.get('tall') === 'on',
-        image_url: product?.image_url || null,
       }
 
       if (product?.id) data.id = product.id
 
-      const file = imageInput?.files[0]
-      if (file) {
-        setFeedback('Enviando imagem...', 'info')
-        data.image_url = await uploadImage(file)
+      if (pendingFiles.length > 0) {
+        setFeedback(`Enviando ${pendingFiles.length} foto(s)...`, 'info')
+        const newUrls = await uploadImages(pendingFiles.map(f => f.file))
+        existingUrls = [...existingUrls, ...newUrls]
       }
+
+      data.images = existingUrls
+      data.image_url = existingUrls[0] || null
 
       await saveProduct(data)
       setFeedback('Produto salvo com sucesso!', 'success')

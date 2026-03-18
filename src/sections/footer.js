@@ -58,7 +58,7 @@ export function footer() {
       <div class="fancy-hr mt-8 mb-6"></div>
       <div class="flex flex-col md:flex-row items-center justify-between gap-3">
         <p class="text-xs text-cds-nude/25">© ${new Date().getFullYear()} CDS — Criativos da Stephannie. Todos os direitos reservados.</p>
-        <p class="text-xs text-cds-nude/20">Feito com <span class="text-cds-gold/50">♥</span> por Matheus Campos</p>
+        <p class="text-xs text-cds-nude/20">Feito por Matheus Campos</p>
       </div>
     </div>
 

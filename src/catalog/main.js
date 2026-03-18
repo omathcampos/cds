@@ -108,6 +108,28 @@ function openModal(productId) {
   document.getElementById('modal-close')?.addEventListener('click', closeModal)
   document.getElementById('modal-backdrop')?.addEventListener('click', closeModal)
   document.addEventListener('keydown', handleEsc)
+
+  // Galeria: thumbnails + setas
+  const images = product.images?.length ? product.images : (product.image_url ? [product.image_url] : [])
+  let currentIdx = 0
+
+  function goTo(idx) {
+    currentIdx = (idx + images.length) % images.length
+    const mainImg = document.getElementById('modal-main-img')
+    if (mainImg) mainImg.src = images[currentIdx]
+    document.querySelectorAll('[data-thumb-idx]').forEach(t => {
+      const isActive = parseInt(t.dataset.thumbIdx) === currentIdx
+      t.classList.toggle('border-cds-gold', isActive)
+      t.classList.toggle('border-transparent', !isActive)
+    })
+  }
+
+  document.querySelectorAll('[data-thumb-idx]').forEach(thumb => {
+    thumb.addEventListener('click', () => goTo(parseInt(thumb.dataset.thumbIdx)))
+  })
+
+  document.getElementById('modal-prev')?.addEventListener('click', () => goTo(currentIdx - 1))
+  document.getElementById('modal-next')?.addEventListener('click', () => goTo(currentIdx + 1))
 }
 
 function closeModal() {
