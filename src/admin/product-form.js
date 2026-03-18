@@ -114,7 +114,10 @@ export function renderProductForm(product = null, categories = []) {
             <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
               <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
             </svg>
-            <span id="image-filename">Selecionar imagem (JPEG/PNG/WebP, máx 5MB)</span>
+            <div>
+              <span id="image-filename">Selecionar imagem (JPEG/PNG/WebP, máx 5MB)</span>
+              <span style="display:block;font-size:0.7rem;color:rgba(244,241,237,0.3);margin-top:0.125rem;">Recomendado: 800×800px ou maior, proporção quadrada</span>
+            </div>
           </label>
           <div id="image-preview-wrap" class="mt-3 hidden">
             <img id="image-preview" src="" alt="Preview" class="w-24 h-24 object-cover rounded-lg border border-cds-gold/30" />

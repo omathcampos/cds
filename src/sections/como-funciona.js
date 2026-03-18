@@ -27,7 +27,7 @@ const passos = [
 
 export function comoFunciona() {
   return `
-  <section id="como-funciona" class="relative py-28 overflow-hidden" style="background: linear-gradient(180deg, #1E1008 0%, #100A03 100%);">
+  <section id="como-funciona" class="relative py-28 overflow-hidden" style="background: linear-gradient(180deg, #162238 0%, #1a2b49 100%);">
 
     <!-- Decoração -->
     <div class="absolute inset-0 pointer-events-none">

@@ -1,4 +1,4 @@
-const IMG_BG = 'https://instagram.fssz1-1.fna.fbcdn.net/v/t51.82787-15/632475468_17924403864214571_2137843253206263935_n.webp?_nc_cat=109&ig_cache_key=MzgzMTY0NDU0MzE1OTE4MDE1Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5zZHIuQzMifQ%3D%3D&_nc_ohc=yP2-BFwcYZgQ7kNvwGNHsfY&_nc_oc=AdmvWaJXE7QXa7MbSD0ZNDO4j1Xhgufv0epOiVwj1rxGzUhNm_GhbNhYcM_Ny8qhZu61oxmGtmqGPN0snodZeFoV&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fssz1-1.fna&_nc_gid=_Ma0vzXCXbVTCkjt1X0Rdg&_nc_ss=8&oh=00_Afz37EAU0Gc58IPslN9Tp_NTwOW-UghwsW75LZuRkPNiHQ&oe=69BF522A'
+const IMG_BG = '/fundo.webp'
 
 export function ctaFinal() {
   return `
@@ -7,7 +7,7 @@ export function ctaFinal() {
     <!-- Imagem de fundo -->
     <div class="absolute inset-0 z-0">
       <img src="${IMG_BG}" alt="" class="w-full h-full object-cover object-center opacity-20" />
-      <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(16,10,3,0.97) 0%, rgba(16,10,3,0.85) 50%, rgba(16,10,3,0.97) 100%);"></div>
+      <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(26,43,73,0.97) 0%, rgba(26,43,73,0.85) 50%, rgba(26,43,73,0.97) 100%);"></div>
     </div>
 
     <!-- Borda superior dourada -->

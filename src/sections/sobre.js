@@ -1,4 +1,4 @@
-const IMG_STEPHANNIE = 'https://instagram.fssz1-1.fna.fbcdn.net/v/t51.75761-15/491493303_17890939293214571_4710776233333835992_n.webp?_nc_cat=111&ig_cache_key=MzYwOTM2MTY2NjE2Njg2NjA4MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTgwMC5zZHIuQzMifQ%3D%3D&_nc_ohc=qM84CNowi6oQ7kNvwEc0Cyd&_nc_oc=AdndjBP83r9FjwSJt9XuKHK5fCf-1LOWzXT4F2M-ZUKLc0zs6cpGnDkAE1B9PL9QJ-iifoFo9pET1NZSU-d3Qmo7&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fssz1-1.fna&_nc_gid=kbZ7GIElOpNVnWS794oQmQ&_nc_ss=8&oh=00_AfwOVKdcDR7f6FSFCUfkA74RhRLs27Hsj6GMrzMZtxbnPw&oe=69BF449D'
+const IMG_STEPHANNIE = '/quem-e-stephannie.png'
 
 export function sobre() {
   return `

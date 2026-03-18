@@ -6,12 +6,8 @@ export function navbar() {
 
         <!-- Logo -->
         <a href="#" class="flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-full border border-cds-gold/40 flex items-center justify-center group-hover:border-cds-gold transition-colors duration-300">
-            <svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="18" stroke="#C9A460" stroke-width="1.5"/>
-              <text x="20" y="26" text-anchor="middle" font-family="Playfair Display, serif" font-size="14" fill="#C9A460" font-weight="700">C</text>
-            </svg>
-          </div>
+          <img src="/gold-submarca.png" alt="CDS — Criativos da Stephannie"
+               class="h-12 w-auto transition-opacity duration-300 group-hover:opacity-80" />
           <div class="leading-tight">
             <span class="font-serif text-lg font-semibold text-cds-white tracking-wide">CDS</span>
             <span class="block text-[10px] text-cds-gold/70 tracking-[0.2em] uppercase">Criativos da Stephannie</span>

@@ -1,13 +1,16 @@
 import '../style.css'
 import { fetchCatalog } from './catalog-api.js'
 import { applyFilters, getCategories } from './catalog-filters.js'
-import { renderCatalogGrid, renderFilters, renderModal, renderSkeletons } from './catalog-render.js'
+import { renderCatalogGrid, renderFilters, renderModal, renderPagination, renderSkeletons } from './catalog-render.js'
 
 let allProducts = []
 let activeFilters = { category: 'Todos', publico: 'Todos', search: '' }
+let currentPage = 1
+let pageSize = 12
 
 function getGrid() { return document.getElementById('catalog-grid') }
 function getFiltersEl() { return document.getElementById('catalog-filters') }
+function getPaginationEl() { return document.getElementById('catalog-pagination') }
 
 function filteredProducts() {
   return applyFilters(allProducts, activeFilters)
@@ -15,11 +18,21 @@ function filteredProducts() {
 
 function rerender() {
   const filtered = filteredProducts()
-  getGrid().innerHTML = renderCatalogGrid(filtered)
-  // Atualiza contador dentro do filter bar re-renderizado
-  const count = document.getElementById('catalog-count')
-  if (count) count.textContent = `${filtered.length} produto${filtered.length !== 1 ? 's' : ''}`
+  const total = filtered.length
+  const start = (currentPage - 1) * pageSize
+  const paged = filtered.slice(start, start + pageSize)
+
+  getGrid().innerHTML = renderCatalogGrid(paged)
   bindCardClicks()
+
+  const count = document.getElementById('catalog-count')
+  if (count) count.textContent = total > 0 ? `${total} produto${total !== 1 ? 's' : ''} encontrado${total !== 1 ? 's' : ''}` : ''
+
+  const pagEl = getPaginationEl()
+  if (pagEl) {
+    pagEl.innerHTML = renderPagination(total, currentPage, pageSize)
+    bindPaginationClicks()
+  }
 }
 
 function renderFilterBar() {
@@ -27,19 +40,13 @@ function renderFilterBar() {
   const filtered = filteredProducts()
   getFiltersEl().innerHTML = renderFilters(cats, activeFilters.category, activeFilters.publico, filtered.length)
   bindFilterClicks()
-  // Search fica dentro do filter bar agora — rebind
   const searchInput = document.getElementById('catalog-search')
   if (searchInput) {
     searchInput.value = activeFilters.search
     searchInput.addEventListener('input', () => {
       activeFilters.search = searchInput.value.trim()
+      currentPage = 1
       rerender()
-      // Atualiza contador sem re-renderizar os chips
-      const count = document.getElementById('catalog-count')
-      if (count) {
-        const f = filteredProducts()
-        count.textContent = `${f.length} produto${f.length !== 1 ? 's' : ''}`
-      }
     })
   }
 }
@@ -49,18 +56,42 @@ function bindFilterClicks() {
   if (categorySelect) {
     categorySelect.addEventListener('change', () => {
       activeFilters.category = categorySelect.value
+      currentPage = 1
       rerender()
       const count = document.getElementById('catalog-count')
       if (count) {
         const f = filteredProducts()
-        count.textContent = `${f.length} produto${f.length !== 1 ? 's' : ''}`
+        count.textContent = f.length > 0 ? `${f.length} produto${f.length !== 1 ? 's' : ''} encontrado${f.length !== 1 ? 's' : ''}` : ''
       }
     })
   }
   document.querySelectorAll('[data-filter-publico]').forEach(btn => {
     btn.addEventListener('click', () => {
       activeFilters.publico = btn.dataset.filterPublico
+      currentPage = 1
       renderFilterBar()
+      rerender()
+    })
+  })
+}
+
+function bindPaginationClicks() {
+  const pagEl = getPaginationEl()
+  if (!pagEl) return
+
+  pagEl.querySelectorAll('[data-page]').forEach(btn => {
+    if (btn.disabled) return
+    btn.addEventListener('click', () => {
+      currentPage = Number(btn.dataset.page)
+      rerender()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+  })
+
+  pagEl.querySelectorAll('[data-page-size]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      pageSize = Number(btn.dataset.pageSize)
+      currentPage = 1
       rerender()
     })
   })

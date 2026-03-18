@@ -1,7 +1,7 @@
 // Imagens do Instagram CDS
-const IMG_HERO     = 'https://instagram.fssz1-1.fna.fbcdn.net/v/t51.82787-15/649664834_17927415822214571_4492788442871780580_n.webp?_nc_cat=101&ig_cache_key=Mzg0OTA0MTc0MjI5MzQ4Njk2Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTcyMC5zZHIuQzMifQ%3D%3D&_nc_ohc=9axmh51zR0IQ7kNvwEzd_R2&_nc_oc=Adlgr2a4_U98KLDc71su1GODY7MGzw6Z_DbCWgUY13pFmqg93RCKcEqK2EYknEvIaqWogkhe1LWfx1EbgqCYeBW1&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fssz1-1.fna&_nc_gid=kbZ7GIElOpNVnWS794oQmQ&_nc_ss=8&oh=00_AfwJvxBqSYthC8kgfD6_-gatWERnPP85MeGlICacBnb1Pw&oe=69BF58A7'
-const IMG_HERO2    = 'https://instagram.fssz1-1.fna.fbcdn.net/v/t51.82787-15/583738443_17915092665214571_8889259502387572044_n.webp?_nc_cat=110&ig_cache_key=Mzc2ODg2MDg5OTEwNTk3NzIxOQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTgwMC5zZHIuQzMifQ%3D%3D&_nc_ohc=gdY8Mw74jZ4Q7kNvwGQkFOi&_nc_oc=AdmzU7qSv5MxS7XcnVNaMgJgKTf6e_JLIc6OCLaTRN3FQXWiNfYq99EoVTehpo5PKU8nRbI7SCOK2dHdj5URwzJO&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fssz1-1.fna&_nc_gid=kbZ7GIElOpNVnWS794oQmQ&_nc_ss=8&oh=00_Afw1KlaDIesUl-nWU9vbfk4q8eoQI3SrI7g_HOy3QYSwUA&oe=69BF4B0A'
-const IMG_HERO3    = 'https://instagram.fssz1-1.fna.fbcdn.net/v/t51.82787-15/645875296_17926691655214571_8870298857249913960_n.webp?_nc_cat=101&ig_cache_key=Mzg0NTM1NDEwMDI5Mjk2NzgwMw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTc4OC5zZHIuQzMifQ%3D%3D&_nc_ohc=wTsEUP_HhgEQ7kNvwH3xq4x&_nc_oc=AdlHagCC9bREq5rV5ZsytdZNoKzd6rQO-pIREz58_9aShTTxZyW8Wj4SLPjEHwpE5RKkUUeeFOMPgyGhizGBOgoj&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fssz1-1.fna&_nc_gid=_Ma0vzXCXbVTCkjt1X0Rdg&_nc_ss=8&oh=00_Afz15BgcwjT_Q5uF9wBtPZFRJmrKBozfvamlhl6KTO5TVA&oe=69BF4B06'
+const IMG_HERO     = '/fundo.webp'
+const IMG_HERO2    = '/folder-capa.jpeg'
+const IMG_HERO3    = '/dia-da-mulher.jpg'
 
 export function hero() {
   return `
